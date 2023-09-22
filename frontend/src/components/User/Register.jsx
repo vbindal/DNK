@@ -1,22 +1,19 @@
 import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField'
-import Avatar from '@mui/material/Avatar'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
 import { useSnackbar } from 'notistack';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, registerUser } from '../../actions/userAction';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import MetaData from '../Layouts/MetaData';
-import FormSidebar from './FormSidebar';
+
 
 const Register = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+
 
     const { loading, isAuthenticated, error } = useSelector((state) => state.user);
 
@@ -34,69 +31,91 @@ const Register = () => {
         confirmPassword: "",
 
     });
+const {firstName,
+lastName,
+phoneNumber,
+HomeAddress,
+pincode,
+district,
+state,
+email,
+country,
+password,
+confirmPassword}=user;
+    
 
-    const {    firstName,
-    lastName,
-    phoneNumber,
-    HomeAddress,
-    pincode,
-    district,
-    state,
-    email,
-    country,
-    password,
-    confirmPassword} = user;
+   
 
-    const [avatar, setAvatar] = useState();
-    const [avatarPreview, setAvatarPreview] = useState("preview.png");
+    // const handleRegister = (e) => {
+    //     e.preventDefault();
+    //     if (password.length < 8) {
+    //         enqueueSnackbar("Password length must be atleast 8 characters", { variant: "warning" });
+    //         return;
+    //     }
+    //     if (password !== confirmPassword) {
+    //         enqueueSnackbar("Password Doesn't Match", { variant: "error" });
+    //         return;
+    //     }
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        if (password.length < 8) {
-            enqueueSnackbar("Password length must be atleast 8 characters", { variant: "warning" });
-            return;
-        }
-        if (password !== confirmPassword) {
-            enqueueSnackbar("Password Doesn't Match", { variant: "error" });
-            return;
-        }
-        if (!avatar) {
-            enqueueSnackbar("Select Avatar", { variant: "error" });
-            return;
-        }
+    //     const formData = new FormData();
+    //     formData.set("email", email);
+    //     formData.set("firstName",firstName)
+    //     formData.set("lastName",lastName)
+    //     formData.set("phoneNumber",phoneNumber)
+    //     formData.set("HomeAddress",HomeAddress)
+    //     formData.set("pincode",pincode)
+    //     formData.set("district",district)
+    //     formData.set("state",state)
+    //     formData.set("country",country)
+    //     formData.set("password", password);
 
-        const formData = new FormData();
-        formData.set("email", email);
-        formData.set("firstName",firstName)
-        formData.set("lastName",lastName)
-        formData.set("phoneNumber",phoneNumber)
-        formData.set("HomeAddress",HomeAddress)
-        formData.set("pincode",pincode)
-        formData.set("district",district)
-        formData.set("state",state)
-        formData.set("country",country)
-        formData.set("password", password);
-
-        dispatch(registerUser(formData));
-    }
+    //     dispatch(registerUser(formData));
+    // }
 
     const handleDataChange = (e) => {
-        if (e.target.name === "avatar") {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setAvatarPreview(reader.result);
-                    setAvatar(reader.result);
-                }
-            };
-
-            reader.readAsDataURL(e.target.files[0]);
-
-        } else {
-            setUser({ ...user, [e.target.name]: e.target.value });
-        }
+        setUser({ ...user, [e.target.name]: e.target.value });
     }
+
+    const OnSubmitHandler=(e)=>{
+        e.preventDefault(); 
+        console.log("yes");
+        const jsonData = {
+            "firstName":"vb",
+            "lastName":"ncwjd",
+            "phoneNumber":"jbhsc",
+           "HomeAddress":"mndbc",
+            "pincode":"mnchd",
+            "username": "hdsbd",
+            "district":"jcbd",
+            "state":"ncjdh",
+            "email": "necshcdhb",
+            "country":"jbdchy",
+            "password": "12345",
+            "confirmPassword": "12345"
+    };
+        fetch("https:/locolhost:4000/dnk/User/signIn", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json', // Specify the content type as JSON
+            },
+            body: JSON.stringify(jsonData)  , // Convert the JSON object to a string
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json(); // Parse the response body as JSON
+            })
+            .then((data) => {
+              // Handle the JSON response data here
+              console.log(data);
+            })
+            .catch((error) => {
+              // Handle any errors that occurred during the fetch
+              console.error('Fetch error:', error);
+            });
+        }
+    
 
     useEffect(() => {
         if (error) {
@@ -128,7 +147,7 @@ const Register = () => {
 
                         {/* <!-- personal info procedure container --> */}
                         <form
-                            onSubmit={handleRegister}
+                            onSubmit={OnSubmitHandler}
                             encType="multipart/form-data"
                             className="p-5 sm:p-10"
                         >
@@ -161,17 +180,16 @@ const Register = () => {
                                         type="email"
                                         name="email"
                                         value={email}
-                                        onChange={handleDataChange}
+                                         onChange={handleDataChange}
                                         required
                                     />
                                     <TextField
                                         fullWidth
                                         id="phoneNumber"
                                         label="phoneNumber"
-                                        type="number"
                                         name="phoneNumber"
                                         value={phoneNumber}
-                                        onChange={handleDataChange}
+                                         onChange={handleDataChange}
                                         required
                                     />
                                          <TextField
@@ -180,17 +198,16 @@ const Register = () => {
                                         label="HomeAddress"
                                         name="HomeAddress"
                                         value={HomeAddress}   /* firstName -> name */
-                                        onChange={handleDataChange}
+                                         onChange={handleDataChange}
                                         required
                                     />
                                          <TextField
                                         fullWidth
                                         id="pincode"
-                                        label="pincode"
-                                        type="number"
+                                        label="pincode"                   
                                         name="pincode"
                                         value={pincode}   /* firstName -> name */
-                                        onChange={handleDataChange}
+                                         onChange={handleDataChange}
                                         required
                                     />
                                          <TextField
@@ -199,7 +216,7 @@ const Register = () => {
                                         label="district"
                                         name="district"
                                         value={district}   /* firstName -> name */
-                                        onChange={handleDataChange}
+                                         onChange={handleDataChange}
                                         required
                                     />
                                          <TextField
@@ -208,7 +225,7 @@ const Register = () => {
                                         label="state"
                                         name="state"
                                         value={state}   /* firstName -> name */
-                                        onChange={handleDataChange}
+                                         onChange={handleDataChange}
                                         required
                                     />
                                          <TextField
@@ -279,7 +296,7 @@ const Register = () => {
                                         Choose File
                                     </label> 
                                 </div> */}
-                                <button type="submit" className="text-white py-3 w-full bg-primary-orange shadow hover:shadow-lg rounded-sm font-medium">Signup</button>
+                                <button type="submit"   className="text-white py-3 w-full bg-primary-orange shadow hover:shadow-lg rounded-sm font-medium">Signup</button>
                                 <Link to="/login" className="hover:bg-gray-50 text-primary-blue text-center py-3 w-full shadow border rounded-sm font-medium">Existing User? Log in</Link>
                             </div>
 
@@ -295,5 +312,5 @@ const Register = () => {
         </>
     );
 };
-
 export default Register;
+

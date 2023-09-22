@@ -70,19 +70,20 @@ export const loginUser = (email, password) => async (dispatch) => {
 };
 
 // Register User
+// Register User
 export const registerUser = (userData) => async (dispatch) => {
     try {
-
         dispatch({ type: REGISTER_USER_REQUEST });
 
         const config = {
             headers: {
-                "Content-Type": "multipart/form-data",
+                // Remove "Content-Type" header if not needed
             },
-        }
+        };
 
+        // Update the URL to point to your backend API
         const { data } = await axios.post(
-            '/dnk/User/signIn',
+            'http://localhost:4000/dnk/user/signIn', // Update the URL
             userData,
             config
         );
@@ -91,7 +92,6 @@ export const registerUser = (userData) => async (dispatch) => {
             type: REGISTER_USER_SUCCESS,
             payload: data.user,
         });
-
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
@@ -99,6 +99,7 @@ export const registerUser = (userData) => async (dispatch) => {
         });
     }
 };
+
 
 // Load User
 export const loadUser = () => async (dispatch) => {

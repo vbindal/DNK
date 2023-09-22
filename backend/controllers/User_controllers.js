@@ -18,7 +18,7 @@ const signupUser = async (req, res, next) => {
       country,
     } = req.body;
 
-    const existingUser = await User.findOne({});
+    const existingUser = await User.findOne({email});
 
     if (existingUser) {
       return res.status(409).json({
@@ -43,7 +43,7 @@ const signupUser = async (req, res, next) => {
     });
 
     await newUser.save();
-
+    console.log(newUser)
     res.status(201).json({
       message: "User registered successfully.",
       User: newUser,

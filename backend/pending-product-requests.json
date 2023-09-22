@@ -1,1 +1,12 @@
-{"pendingProductRequests":[{"id":"650c94771f78da9562cc624d","name":"Sample Product","category":"Electronics","description":"This is a sample product description.","price":99.99,"approvalStatus":"Pending"}]}
+{
+  "pendingProductRequests": [
+    {
+      "id": "650c94771f78da9562cc624d",
+      "name": "Sample Product",
+      "category": "Electronics",
+      "description": "This is a sample product description.",
+      "price": 99.99,
+      "approvalStatus": "Pending"
+    }
+  ]
+}
