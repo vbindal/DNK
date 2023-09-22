@@ -6,19 +6,19 @@ const schema = mongoose.Schema;
 const userSchema = new schema({
   firstName: {
     type: String,
-    require: true,
+    required: true,
   },
   LastName: {
     type: String,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
   confirmPassword: {
     type: String,
@@ -56,15 +56,24 @@ const userSchema = new schema({
         require:true
     }
   },
-  cart:
+  cart: [
+    {
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+      quantity: {
+        type: Number,
+        default: 1, // You can set a default quantity if needed
+      },
+    }
+  ],
+  favorites:[
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
-    },
-  favourites:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-  },
+  }
+],
   Orders:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",

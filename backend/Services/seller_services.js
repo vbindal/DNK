@@ -37,7 +37,4 @@ router.post("/upload-product", async (req, res) => {
 
 
 
-
-
-
 module.exports = router;

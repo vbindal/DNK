@@ -154,7 +154,6 @@ async function updateAdminPasswords(req,res,next) {
   }
 }
 
-
 const updateAdmin = async (req, res,next) => {
   try {
     const id = req.params.id;

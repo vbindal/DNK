@@ -5,6 +5,7 @@ const sellerRoutes = require("./routes/seller_routes");
 const adminServices = require("./Services/admin_services");
 const sellerServices = require("./Services/seller_services");
 const UserRoutes = require("./routes/User_routes");
+const UserServices = require("./Services/User_Services")
 
 const app = express();
 
@@ -24,5 +25,6 @@ app.use("/dnk", adminServices);
 app.use("/dnk/Seller", sellerRoutes);
 app.use("/dnk/Seller", sellerServices);
 app.use("/dnk/User", UserRoutes);
+app.use("/dnk/User",UserServices);
 
 app.listen(port, () => console.log(`Server is running at port ${port}`));
