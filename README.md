@@ -1,2 +1,2 @@
 # DNK
-not ready under development phase
+under development phase
